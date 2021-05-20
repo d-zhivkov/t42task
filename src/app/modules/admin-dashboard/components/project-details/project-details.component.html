@@ -1,0 +1,41 @@
+<div *ngIf="employees$ | async as employees" class="container">
+    <h2 class="mt-3">{{projectId ? 'Update project' : 'Create project'}}</h2>
+    <h3 *ngIf="projectId !== null && projectId !== undefined">The project is created on {{projectForm.controls.createdOn.value}}</h3>
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <mat-form-field class="col-12">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <div *ngIf="projectForm.controls.name.invalid && (projectForm.controls.name.dirty || projectForm.controls.name.touched)" class="text-danger">
+                Name is required.
+            </div>
+        </div>
+        <div class="form-group">
+            <mat-form-field class="col-12">
+                <mat-label>Revenue</mat-label>
+                <input matInput formControlName="revenue">
+            </mat-form-field>
+            <div *ngIf="projectForm.controls.revenue.invalid && (projectForm.controls.revenue.dirty || projectForm.controls.revenue.touched)" class="text-danger">
+                Revenue is required.
+            </div>
+        </div>
+        <div *ngIf="projectId !== null && projectId !== undefined" class="form-group mb-2">
+            <mat-radio-group formControlName="status" aria-label="Update project status">
+                <mat-radio-button style="margin-right: 10px;" [value]="projectStatusTypes.Active">Active</mat-radio-button>
+                <mat-radio-button [value]="projectStatusTypes.Completed">Completed</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="col-12">
+                <mat-label>Assigned to</mat-label>
+                <mat-select formControlName="assignedTo" multiple>
+                  <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,23 @@
+<div class="container" *ngIf="employees$ | async as employees">
+    <div class="d-flex justify-content-between mt-3">
+        <h2>Employees management</h2>
+        <button class="btn btn-primary" (click)="onNewButtonClicked()">NEW</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.firstName + ' ' + employee.lastName}}</td>
+                <td class="d-flex justify-content-end">
+                    <a [routerLink]="[employee.id]" class="fa fa-folder-open fa-2x mr-1" style="margin-right: 10px;"></a>
+                    <span class="fa fa-trash fa-2x delete-button cursor-pointer" (click)="openConfirmationDialog(employee)"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

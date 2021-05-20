@@ -1,0 +1,27 @@
+<div class="container" *ngIf="projects$ | async as projects">
+    <div class="d-flex justify-content-between mt-3">
+        <h2>Projects management</h2>
+        <button class="btn btn-primary" (click)="onNewButtonClicked()">NEW</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Revenue</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let project of projects">
+                <td>{{project.name}}</td>
+                <td [ngClass]="project.status == projectStatusTypes.Active ? 'text-success' : 'text-info'">{{projectStatusTypes[project.status]}}</td>
+                <td>{{project.revenue}}</td>
+                <td class="d-flex justify-content-end">
+                    <a [routerLink]="[project.id]" class="fa fa-folder-open fa-2x" style="margin-right: 10px;"></a>
+                    <span class="fa fa-trash fa-2x delete-button cursor-pointer" (click)="openConfirmationDialog(project)"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
